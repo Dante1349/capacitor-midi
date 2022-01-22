@@ -17,7 +17,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com.git"
+    "url": "https://github.com/Dante1349/capacitor-midi"
   },
   "bugs": {
     "url": "https://github.com/Dante1349/capacitor-midi/issues"
