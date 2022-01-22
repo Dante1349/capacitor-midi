@@ -1,7 +1,7 @@
 {
-  "name": "@tekbox-coco/midi-plugin",
+  "name": "capacitor-midi",
   "version": "0.0.1",
-  "description": "Access to midi devices",
+  "description": "Grants access to midi devices via native libraries or WebMIDI.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -13,19 +13,20 @@
     "ios/Plugin/",
     "TekboxCocoMidiPlugin.podspec"
   ],
-  "author": "Tekbox",
+  "author": "Dante1349",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com.git"
   },
   "bugs": {
-    "url": "https://github.com/issues"
+    "url": "https://github.com/Dante1349/capacitor-midi/issues"
   },
   "keywords": [
     "capacitor",
     "plugin",
-    "native"
+    "native",
+    "MIDI"
   ],
   "scripts": {
     "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
@@ -74,5 +75,8 @@
     "android": {
       "src": "android"
     }
+  },
+  "dependencies": {
+    "webmidi": "^3.0.10"
   }
 }

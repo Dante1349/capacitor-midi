@@ -1,3 +1,9 @@
-export interface MIDIPluginPlugin {
-  echo(options: { value: string }): Promise<{ value: string }>;
+import type {ListenerCallback, PluginListenerHandle} from "@capacitor/core";
+
+export interface MIDIPluginPlugin{
+  listMIDIDevices(): Promise<{ value: string[] }>
+
+  openDevice(): Promise<void>
+
+  addListener(eventName: string, listenerFunc: ListenerCallback): PluginListenerHandle
 }

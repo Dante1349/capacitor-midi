@@ -1,5 +1,7 @@
 # Contributing
 
+Please be respectful to each other.
+
 This guide provides instructions for contributing to this Capacitor plugin.
 
 ## Developing

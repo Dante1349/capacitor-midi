@@ -7,6 +7,7 @@ export default {
       name: 'capacitorMIDIPlugin',
       globals: {
         '@capacitor/core': 'capacitorExports',
+        'webmidi': 'webmidi',
       },
       sourcemap: true,
       inlineDynamicImports: true,
@@ -18,5 +19,5 @@ export default {
       inlineDynamicImports: true,
     },
   ],
-  external: ['@capacitor/core'],
+  external: ['@capacitor/core', 'webmidi'],
 };
