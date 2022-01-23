@@ -13,6 +13,7 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -74,10 +75,10 @@ public class MIDIPlugin {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void openDevice(Consumer<MIDIDeviceMessage> consumer) {
+    public void openDevice(int deviceNumber, Consumer<MIDIDeviceMessage> consumer) {
         MidiDeviceInfo devices[] = this.getDeviceInfos();
         if (devices != null && devices.length > 0) {
-            this.midiManager.openDevice(devices[0],
+            this.midiManager.openDevice(devices[deviceNumber],
                     (MidiDevice device) -> {
                         if (device != null) {
                             Log.i("MIDIPlugin", "Device opened: " + device);

@@ -1,15 +1,13 @@
 <ion-content [fullscreen]="true">
-  <h1>MIDI Device Connector</h1>
+  <h1>Capacitor MIDI</h1>
 
-  <h3>devices:</h3>
-  <div *ngFor="let device of devices">{{device}}</div>
-  <div *ngIf="devices && devices.length===0">no devices found</div>
+  <h2>Devices:</h2>
+  <div class="device" *ngFor="let device of devices; let i = index">{{device}} <button class="button" (click)="openDevice(i)">open</button></div>
+  <div class="device" *ngIf="devices && devices.length===0">no devices found</div>
   <button class="button" (click)="updateDevices()">update</button>
-  <button class="button" (click)="openDevice()">open</button>
   <div *ngIf="opened">Device opened</div>
 
-
-  <h3>messages:</h3>
+  <h2>Messages:</h2>
   <div *ngFor="let message of messages">
     <div>{{msgToString(message)}}</div>
   </div>

@@ -31,7 +31,7 @@ interface MidiMessage {
 <docgen-index>
 
 * [`listMIDIDevices()`](#listmididevices)
-* [`openDevice()`](#opendevice)
+* [`openDevice(...)`](#opendevice)
 * [`addListener(...)`](#addlistener)
 * [Interfaces](#interfaces)
 
@@ -51,11 +51,15 @@ listMIDIDevices() => Promise<{ value: string[]; }>
 --------------------
 
 
-### openDevice()
+### openDevice(...)
 
 ```typescript
-openDevice() => Promise<void>
+openDevice(options: DeviceOptions) => Promise<void>
 ```
+
+| Param         | Type                                                    |
+| ------------- | ------------------------------------------------------- |
+| **`options`** | <code><a href="#deviceoptions">DeviceOptions</a></code> |
 
 --------------------
 
@@ -77,6 +81,13 @@ addListener(eventName: string, listenerFunc: ListenerCallback) => PluginListener
 
 
 ### Interfaces
+
+
+#### DeviceOptions
+
+| Prop               | Type                |
+| ------------------ | ------------------- |
+| **`deviceNumber`** | <code>number</code> |
 
 
 #### PluginListenerHandle

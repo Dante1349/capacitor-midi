@@ -27,12 +27,17 @@ export class WebMIDIHandler {
             return
         }
         const device = this.midi.inputs[deviceNo]
-        device.removeListener("noteon");
-        device.removeListener("noteoff");
-        device.addListener("noteon",(e: any) => {
+
+        // prevent multiple event listener subscriptions
+        this.midi.inputs.forEach((d: any) => {
+            d.removeListener("noteon")
+            d.removeListener("noteoff")
+        })
+
+        device.addListener("noteon", (e: any) => {
             callback(e)
         });
-        device.addListener("noteoff",(e: any) => {
+        device.addListener("noteoff", (e: any) => {
             callback(e)
         });
     }
@@ -46,12 +51,9 @@ export class WebMIDIHandler {
         const devices = []
         for (const entry of this.midi.inputs) {
             if (entry?.type && entry.type == "input") {
-                devices.push({
-                    "manufacturer": entry.manufacturer,
-                    "name": entry.name
-                })
+                devices.push((entry.name) ? entry.name : "Unknown Device")
             }
         }
-        return devices.map(d => JSON.stringify(d))
+        return devices
     }
 }

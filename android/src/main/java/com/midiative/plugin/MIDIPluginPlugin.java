@@ -1,6 +1,7 @@
 package com.midiative.plugin;
 
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -41,7 +42,8 @@ public class MIDIPluginPlugin extends Plugin {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @PluginMethod
     public void openDevice(PluginCall call) {
-        implementation.openDevice((MIDIDeviceMessage message) -> {
+        int deviceNumber = call.getInt("deviceNumber");
+        implementation.openDevice(deviceNumber, (MIDIDeviceMessage message) -> {
             JSObject midiMessage = new JSObject();
 
             String rawType = String.valueOf(message.msg[1]);

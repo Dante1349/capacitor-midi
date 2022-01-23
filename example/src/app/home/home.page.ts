@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
-import {MIDIPlugin, MidiMessage} from 'capacitor-midi';
+import {MidiMessage, DeviceOptions, MIDIPlugin} from 'capacitor-midi';
 
 @Component({
   selector: 'app-home',
@@ -12,36 +12,38 @@ export class HomePage {
   opened = false;
 
   constructor(private cd: ChangeDetectorRef) {
-      MIDIPlugin.listMIDIDevices()
-        .then(devices => {
-          this.devices = devices.value;
-        });
-
-      MIDIPlugin.addListener('MIDIEventReceived', (message: MidiMessage ) => {
-        this.messages.push(message);
-        cd.detectChanges();
-      });
-  }
-
-  updateDevices() {
     MIDIPlugin.listMIDIDevices()
       .then(devices => {
-        console.log(devices);
+        this.devices = devices.value;
+      });
+
+    MIDIPlugin.addListener('MIDIEventReceived', (message: MidiMessage) => {
+      this.messages.push(message);
+      cd.detectChanges();
+    });
+  }
+
+  updateDevices(): void {
+    MIDIPlugin.listMIDIDevices()
+      .then(devices => {
         this.devices = devices.value;
       });
   }
 
-  openDevice() {
-    MIDIPlugin.openDevice().then(r => {
-      this.opened = true;
+  openDevice(deviceNumber: number): void {
+    const deviceOptions: DeviceOptions = {
+      deviceNumber: deviceNumber
+    };
+    MIDIPlugin.openDevice(deviceOptions).then(r => {
+      this.clearMessages();
     });
   }
 
-  clearMessages() {
+  clearMessages(): void {
     this.messages = [];
   }
 
-  msgToString(msg: MidiMessage) {
+  msgToString(msg: MidiMessage): string {
     return JSON.stringify(msg);
   }
 }

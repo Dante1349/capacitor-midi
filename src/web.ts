@@ -1,7 +1,7 @@
 import {WebPlugin} from '@capacitor/core';
 
 import {WebMIDIHandler} from "./WebMIDIHandler";
-import type {MIDIPluginPlugin} from './definitions';
+import type {DeviceOptions, MIDIPluginPlugin} from './definitions';
 
 export class MIDIPluginWeb extends WebPlugin implements MIDIPluginPlugin {
     async listMIDIDevices(): Promise<{ value: string[] }> {
@@ -11,7 +11,7 @@ export class MIDIPluginWeb extends WebPlugin implements MIDIPluginPlugin {
         return {value: wmh.listInputsAndOutputs()};
     }
 
-    async openDevice(): Promise<void> {
+    async openDevice(options: DeviceOptions): Promise<void> {
         const wmh = WebMIDIHandler.instance;
         await wmh.initWebMidi();
         const callback = (ret: any) => {
@@ -36,8 +36,8 @@ export class MIDIPluginWeb extends WebPlugin implements MIDIPluginPlugin {
 
             this.notifyListeners('MIDIEventReceived', msg)
         }
-        wmh.addDeviceListener(1, callback)
-        console.log("MIDIPlugin", "Device opened: " + 1)
+        wmh.addDeviceListener(options.deviceNumber, callback)
+        console.log("MIDIPlugin", "Device opened: " + options.deviceNumber)
         return
     }
 
