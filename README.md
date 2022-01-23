@@ -1,17 +1,17 @@
-# capacitor-midi 🎹
+# 🎹 capacitor-midi
 
 Grants access to midi devices via native libraries or WebMIDI. 
 
 Currently, only Android and Web is available, iOS is blocked at the moment because I don't have access to a mac. I hope this changes soon.
 
-## Install
+## 🔌 Install
 
 ```bash
 npm install capacitor-midi
 npx cap sync
 ```
 
-## Usage
+## 🎼 Usage
 ### Subscribe to MIDI events after a device is opened
 ```typescript
 await MIDIPlugin.openDevice()
@@ -26,7 +26,7 @@ interface MidiMessage {
 }
 ```
 
-## API
+## 🎛 API
 
 <docgen-index>
 
