@@ -14,7 +14,12 @@ npx cap sync
 ## 🎼 Usage
 ### Subscribe to MIDI events after a device is opened
 ```typescript
+const options: DeviceOptions = {
+    deviceNumber: 0 // Choose device from listMIDIDevices()
+}
+
 await MIDIPlugin.openDevice()
+
 
 MIDIPlugin.addListener('MIDIEventReceived', 
     (message: MidiMessage) => console.log(message));
