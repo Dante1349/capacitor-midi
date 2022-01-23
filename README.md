@@ -14,8 +14,16 @@ npx cap sync
 ## Usage
 ### Subscribe to MIDI events after a device is opened
 ```angular2html
+await MIDIPlugin.openDevice()
+
 MIDIPlugin.addListener('MIDIEventReceived', 
     (message: MidiMessage) => console.log(message));
+
+interface MidiMessage {
+    type: string; // NoteOn, NoteOff, UNKNOWN - XXX
+    note: number;
+    velocity: number;
+}
 ```
 
 ## API
