@@ -2,7 +2,7 @@
 
 Grants access to midi devices via native libraries or WebMIDI. 
 
-Currently NO iOS support. Bbecause I don't have access to a mac. I hope this changes soon.
+❗ Currently NO iOS support. Because I don't have access to a mac. I hope this changes soon. ❗
 
 ## 🔌 Install
 
