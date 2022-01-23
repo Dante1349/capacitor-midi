@@ -13,7 +13,7 @@ npx cap sync
 
 ## Usage
 ### Subscribe to MIDI events after a device is opened
-```angular2html
+```typescript
 await MIDIPlugin.openDevice()
 
 MIDIPlugin.addListener('MIDIEventReceived', 
