@@ -25,21 +25,13 @@ public class MIDIPlugin {
     public MIDIPlugin(Context context) {
         this.context = context;
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_MIDI)) {
-            // do MIDI stuff
             Log.i("MIDIPlugin", "MIDI feature enabled");
 
             this.midiManager = (MidiManager) context.getSystemService(Context.MIDI_SERVICE);
-
-
         } else {
             Log.i("MIDIPlugin", "No MIDI feature found");
             throw new Error("No MIDI feature found.");
         }
-    }
-
-    public String echo(String value) {
-        Log.i("Echo", value);
-        return value;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

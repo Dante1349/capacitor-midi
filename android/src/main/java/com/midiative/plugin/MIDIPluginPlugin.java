@@ -28,15 +28,6 @@ public class MIDIPluginPlugin extends Plugin {
         this.implementation = new MIDIPlugin(this.getContext());
     }
 
-    @PluginMethod
-    public void echo(PluginCall call) {
-        String value = call.getString("value");
-
-        JSObject ret = new JSObject();
-        ret.put("value", implementation.echo(value));
-        call.resolve(ret);
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     @PluginMethod
     public void listMIDIDevices(PluginCall call) {
@@ -52,24 +43,26 @@ public class MIDIPluginPlugin extends Plugin {
     public void openDevice(PluginCall call) {
         implementation.openDevice((MIDIDeviceMessage message) -> {
             JSObject midiMessage = new JSObject();
-            midiMessage.put("msg", this.castToString(message.msg));
-            midiMessage.put("count", message.count);
-            midiMessage.put("offset", message.offset);
-            midiMessage.put("timestamp", message.timestamp);
 
-            JSObject ret = new JSObject();
-            ret.put("value", midiMessage);
-            notifyListeners("MIDIEventReceived", ret);
+            String rawType = String.valueOf(message.msg[1]);
+            String type = "";
+            switch(rawType) {
+                case "-112":
+                    type = "NoteOn";
+                    break;
+                case "-128":
+                    type = "NoteOff";
+                    break;
+                default:
+                    type = "UNKNOWN - " + rawType;
+                    break;
+            }
+            midiMessage.put("type", type);
+            midiMessage.put("note", String.valueOf(message.msg[2]));
+            midiMessage.put("velocity", String.valueOf(message.msg[3]));
+
+            notifyListeners("MIDIEventReceived", midiMessage);
         });
         call.resolve();
-    }
-
-    private String castToString(byte[] bytes) {
-        // bytes[1] = -112 is vermutlich NoteOn
-        // bytes[1] = -128 is vermutlich NoteOff
-        // kp was des soll
-        String key = String.valueOf(bytes[2]);
-        String velocity = String.valueOf(bytes[3]);
-        return "key: " + key + " velocity: " + velocity + " raw: " + Arrays.toString(bytes);
     }
 }

@@ -10,9 +10,9 @@
 
 
   <h3>messages:</h3>
-  <button class="button" (click)="clearMessages()">clear</button>
   <div *ngFor="let message of messages">
     <div>{{msgToString(message)}}</div>
   </div>
   <div *ngIf="messages && messages.length===0">no messages found</div>
+  <button class="button" (click)="clearMessages()">clear</button>
 </ion-content>

@@ -21,14 +21,19 @@ export class WebMIDIHandler {
         }
     }
 
-    public addDeviceListener(deviceNo: number): void {
+    public addDeviceListener(deviceNo: number, callback: (arg: any) => any): void {
         if (!this.midi) {
             console.error("WebMidi not initialized!")
             return
         }
-        console.log(this.midi.inputs, deviceNo)
-        this.midi.inputs[deviceNo].addListener("noteon", (e: any) => {
-            console.log(e)
+        const device = this.midi.inputs[deviceNo]
+        device.removeListener("noteon");
+        device.removeListener("noteoff");
+        device.addListener("noteon",(e: any) => {
+            callback(e)
+        });
+        device.addListener("noteoff",(e: any) => {
+            callback(e)
         });
     }
 
@@ -40,9 +45,6 @@ export class WebMIDIHandler {
 
         const devices = []
         for (const entry of this.midi.inputs) {
-            console.log("Input port [type:'" + entry.type + "'] id:'" + entry.id +
-                "' manufacturer:'" + entry.manufacturer + "' name:'" + entry.name +
-                "' version:'" + entry.version + "'");
             if (entry?.type && entry.type == "input") {
                 devices.push({
                     "manufacturer": entry.manufacturer,
@@ -50,7 +52,6 @@ export class WebMIDIHandler {
                 })
             }
         }
-        console.log("in plug", devices)
         return devices.map(d => JSON.stringify(d))
     }
 }

@@ -7,3 +7,9 @@ export interface MIDIPluginPlugin{
 
   addListener(eventName: string, listenerFunc: ListenerCallback): PluginListenerHandle
 }
+
+export interface MidiMessage {
+  type: string;
+  note: number;
+  velocity: number;
+}

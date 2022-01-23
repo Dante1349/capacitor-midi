@@ -1,12 +1,21 @@
 # capacitor-midi 🎹
 
-Grants access to midi devices via native libraries or WebMIDI. Currently only Android is available and the inital Web part, iOS is blocked for the moment because I don't have private access to a mac. I hope this changes soon.
+Grants access to midi devices via native libraries or WebMIDI. 
+
+Currently, only Android and Web is available, iOS is blocked at the moment because I don't have access to a mac. I hope this changes soon.
 
 ## Install
 
 ```bash
 npm install capacitor-midi
 npx cap sync
+```
+
+## Usage
+### Subscribe to MIDI events after a device is opened
+```angular2html
+MIDIPlugin.addListener('MIDIEventReceived', 
+    (message: MidiMessage) => console.log(message));
 ```
 
 ## API
