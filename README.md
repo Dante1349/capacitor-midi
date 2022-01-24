@@ -1,8 +1,8 @@
 # 🎹 capacitor-midi
 
-Grants access to midi devices via native libraries or WebMIDI. 
+Grants access to midi devices via native libraries or WebMIDI.
 
-❗ Currently NO iOS support. Because I don't have access to a mac. I hope this changes soon. ❗
+❗Currently NO iOS support. Because I don't have access to a Mac. Contributors Welcome❗
 
 ## 🔌 Install
 
@@ -12,17 +12,18 @@ npx cap sync
 ```
 
 ## 🎼 Usage
+
 ### Subscribe to MIDI events after a device is opened
+
 ```typescript
 const options: DeviceOptions = {
     deviceNumber: 0 // Choose device from listMIDIDevices()
 }
 
 await MIDI.openDevice(options)
+    .catch((e) => console.error(e))
 
-
-MIDI.addListener('MIDIEventReceived', 
-    (message: MidiMessage) => console.log(message));
+MIDI.addDeviceListener((message: MidiMessage) => console.log(message));
 
 interface MidiMessage {
     type: string; // NoteOn, NoteOff, UNKNOWN - XXX
@@ -37,7 +38,7 @@ interface MidiMessage {
 
 * [`listMIDIDevices()`](#listmididevices)
 * [`openDevice(...)`](#opendevice)
-* [`addListener(...)`](#addlistener)
+* [`addDeviceListener(...)`](#adddevicelistener)
 * [Interfaces](#interfaces)
 
 </docgen-index>
@@ -69,16 +70,15 @@ openDevice(options: DeviceOptions) => Promise<void>
 --------------------
 
 
-### addListener(...)
+### addDeviceListener(...)
 
 ```typescript
-addListener(eventName: string, listenerFunc: ListenerCallback) => PluginListenerHandle
+addDeviceListener(callback: (message: MidiMessage) => any) => PluginListenerHandle
 ```
 
-| Param              | Type                                            |
-| ------------------ | ----------------------------------------------- |
-| **`eventName`**    | <code>string</code>                             |
-| **`listenerFunc`** | <code>(err: any, ...args: {}) =&gt; void</code> |
+| Param          | Type                                                                     |
+| -------------- | ------------------------------------------------------------------------ |
+| **`callback`** | <code>(message: <a href="#midimessage">MidiMessage</a>) =&gt; any</code> |
 
 **Returns:** <code><a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
 
@@ -100,5 +100,14 @@ addListener(eventName: string, listenerFunc: ListenerCallback) => PluginListener
 | Prop         | Type                                      |
 | ------------ | ----------------------------------------- |
 | **`remove`** | <code>() =&gt; Promise&lt;void&gt;</code> |
+
+
+#### MidiMessage
+
+| Prop           | Type                |
+| -------------- | ------------------- |
+| **`type`**     | <code>string</code> |
+| **`note`**     | <code>number</code> |
+| **`velocity`** | <code>number</code> |
 
 </docgen-api>

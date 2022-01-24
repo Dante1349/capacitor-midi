@@ -17,7 +17,7 @@ export class HomePage {
         this.devices = devices.value;
       });
 
-    MIDI.addListener('MIDIEventReceived', (message: MidiMessage) => {
+    MIDI.addDeviceListener((message: MidiMessage) => {
       this.messages.push(message);
       cd.detectChanges();
     });

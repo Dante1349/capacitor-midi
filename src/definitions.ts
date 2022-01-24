@@ -1,11 +1,11 @@
-import type {ListenerCallback, PluginListenerHandle} from "@capacitor/core";
+import type {PluginListenerHandle} from "@capacitor/core";
 
 export interface MIDIPlugin {
   listMIDIDevices(): Promise<{ value: string[] }>
 
   openDevice(options: DeviceOptions): Promise<void>
 
-  addListener(eventName: string, listenerFunc: ListenerCallback): PluginListenerHandle
+  addDeviceListener(callback: ((message: MidiMessage) => any)): PluginListenerHandle
 }
 
 export interface MidiMessage {
