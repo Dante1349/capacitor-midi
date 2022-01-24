@@ -26,20 +26,25 @@ export class WebMIDIHandler {
             console.error("WebMidi not initialized!")
             return
         }
-        const device = this.midi.inputs[deviceNo]
 
-        // prevent multiple event listener subscriptions
-        this.midi.inputs.forEach((d: any) => {
-            d.removeListener("noteon")
-            d.removeListener("noteoff")
-        })
+        if (this.midi.inputs && this.midi.inputs.size > 0 && deviceNo < this.midi.inputs.size) {
+            const device = this.midi.inputs[deviceNo]
 
-        device.addListener("noteon", (e: any) => {
-            callback(e)
-        });
-        device.addListener("noteoff", (e: any) => {
-            callback(e)
-        });
+            // prevent multiple event listener subscriptions
+            this.midi.inputs.forEach((d: any) => {
+                d.removeListener("noteon")
+                d.removeListener("noteoff")
+            })
+
+            device.addListener("noteon", (e: any) => {
+                callback(e)
+            });
+            device.addListener("noteoff", (e: any) => {
+                callback(e)
+            });
+        } else {
+            console.error("Could not open device")
+        }
     }
 
     public listInputsAndOutputs(): string[] {

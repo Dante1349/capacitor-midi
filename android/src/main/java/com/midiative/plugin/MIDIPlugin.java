@@ -77,7 +77,7 @@ public class MIDIPlugin {
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void openDevice(int deviceNumber, Consumer<MIDIDeviceMessage> consumer) {
         MidiDeviceInfo devices[] = this.getDeviceInfos();
-        if (devices != null && devices.length > 0) {
+        if (devices != null && devices.length > 0 && deviceNumber < devices.length) {
             this.midiManager.openDevice(devices[deviceNumber],
                     (MidiDevice device) -> {
                         if (device != null) {
@@ -88,8 +88,7 @@ public class MIDIPlugin {
                         }
                     }, new Handler(Looper.getMainLooper()));
         } else {
-            Log.i("MIDIPlugin", "Cannot open device");
+            Log.i("MIDIPlugin", "Could not open device");
         }
     }
-
 }
