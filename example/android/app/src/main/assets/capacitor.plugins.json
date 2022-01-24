@@ -13,6 +13,6 @@
 	},
 	{
 		"pkg": "capacitor-midi",
-		"classpath": "com.midiative.plugin.MIDIPluginPlugin"
+		"classpath": "capacitormidi.MIDIPlugin"
 	}
 ]

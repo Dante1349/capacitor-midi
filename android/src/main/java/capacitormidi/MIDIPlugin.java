@@ -1,7 +1,6 @@
-package com.midiative.plugin;
+package capacitormidi;
 
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -15,18 +14,18 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 import java.util.Arrays;
 
 @CapacitorPlugin(name = "MIDIPlugin")
-public class MIDIPluginPlugin extends Plugin {
+public class MIDIPlugin extends Plugin {
 
-    private MIDIPlugin implementation;
+    private AndroidMIDIHandler androidMidiHandler;
 
-    public MIDIPluginPlugin() {
+    public MIDIPlugin() {
         super();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void load() {
-        this.implementation = new MIDIPlugin(this.getContext());
+        this.androidMidiHandler = new AndroidMIDIHandler(this.getContext());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -34,7 +33,7 @@ public class MIDIPluginPlugin extends Plugin {
     public void listMIDIDevices(PluginCall call) {
         JSObject ret = new JSObject();
         JSArray devices = new JSArray();
-        Arrays.stream(implementation.listMIDIDevices()).forEach(devices::put);
+        Arrays.stream(androidMidiHandler.listMIDIDevices()).forEach(devices::put);
         ret.put("value", devices);
         call.resolve(ret);
     }
@@ -43,7 +42,7 @@ public class MIDIPluginPlugin extends Plugin {
     @PluginMethod
     public void openDevice(PluginCall call) {
         int deviceNumber = call.getInt("deviceNumber");
-        implementation.openDevice(deviceNumber, (MIDIDeviceMessage message) -> {
+        androidMidiHandler.openDevice(deviceNumber, (MIDIDeviceMessage message) -> {
             JSObject midiMessage = new JSObject();
 
             String rawType = String.valueOf(message.msg[1]);

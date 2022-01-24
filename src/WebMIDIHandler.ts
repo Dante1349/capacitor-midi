@@ -27,7 +27,9 @@ export class WebMIDIHandler {
             return
         }
 
-        if (this.midi.inputs && this.midi.inputs.size > 0 && deviceNo < this.midi.inputs.size) {
+        console.log(this.midi.inputs, this.midi.inputs.length)
+
+        if (this.midi.inputs && this.midi.inputs.length > 0 && deviceNo < this.midi.inputs.length) {
             const device = this.midi.inputs[deviceNo]
 
             // prevent multiple event listener subscriptions

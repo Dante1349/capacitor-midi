@@ -1,4 +1,4 @@
-package com.midiative.plugin;
+package capacitormidi;
 
 import android.media.midi.MidiReceiver;
 import android.os.Build;

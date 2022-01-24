@@ -1,4 +1,4 @@
-package com.midiative.plugin;
+package capacitormidi;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -18,12 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class MIDIPlugin {
+public class AndroidMIDIHandler {
     private Context context;
     private MidiManager midiManager;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public MIDIPlugin(Context context) {
+    public AndroidMIDIHandler(Context context) {
         this.context = context;
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_MIDI)) {
             Log.i("MIDIPlugin", "MIDI feature enabled");
@@ -76,9 +76,9 @@ public class MIDIPlugin {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void openDevice(int deviceNumber, Consumer<MIDIDeviceMessage> consumer) {
-        MidiDeviceInfo devices[] = this.getDeviceInfos();
-        if (devices != null && devices.length > 0 && deviceNumber < devices.length) {
-            this.midiManager.openDevice(devices[deviceNumber],
+        MidiDeviceInfo deviceInfos[] = this.getDeviceInfos();
+        if (deviceInfos != null && deviceInfos.length > 0 && deviceNumber < deviceInfos.length) {
+            this.midiManager.openDevice(deviceInfos[deviceNumber],
                     (MidiDevice device) -> {
                         if (device != null) {
                             Log.i("MIDIPlugin", "Device opened: " + device);
