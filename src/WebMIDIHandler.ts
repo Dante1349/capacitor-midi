@@ -27,8 +27,6 @@ export class WebMIDIHandler {
             return
         }
 
-        console.log(this.midi.inputs, this.midi.inputs.length)
-
         if (this.midi.inputs && this.midi.inputs.length > 0 && deviceNo < this.midi.inputs.length) {
             const device = this.midi.inputs[deviceNo]
 
