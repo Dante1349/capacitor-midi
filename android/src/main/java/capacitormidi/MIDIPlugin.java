@@ -38,7 +38,7 @@ public class MIDIPlugin extends Plugin {
         call.resolve(ret);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @PluginMethod
     public void openDevice(PluginCall call) {
         int deviceNumber = call.getInt("deviceNumber");

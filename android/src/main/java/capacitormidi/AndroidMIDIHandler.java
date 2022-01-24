@@ -19,20 +19,33 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class AndroidMIDIHandler {
+    private static AndroidMIDIHandler INSTANCE;
+    private String info = "Initial info class";
+
     private Context context;
     private MidiManager midiManager;
 
+    private MidiOutputPort lastOutputPort = null;
+
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public AndroidMIDIHandler(Context context) {
+    AndroidMIDIHandler(Context context) {
         this.context = context;
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_MIDI)) {
             Log.i("MIDIPlugin", "MIDI feature enabled");
 
             this.midiManager = (MidiManager) context.getSystemService(Context.MIDI_SERVICE);
         } else {
-            Log.i("MIDIPlugin", "No MIDI feature found");
+            Log.e("MIDIPlugin", "No MIDI feature found");
             throw new Error("No MIDI feature found.");
         }
+    }
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    AndroidMIDIHandler AndroidMIDIHandler(Context context) {
+        if(INSTANCE == null) {
+            INSTANCE = new AndroidMIDIHandler(context);
+        }
+
+        return INSTANCE;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -74,21 +87,32 @@ public class AndroidMIDIHandler {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void openDevice(int deviceNumber, Consumer<MIDIDeviceMessage> consumer) {
         MidiDeviceInfo deviceInfos[] = this.getDeviceInfos();
-        if (deviceInfos != null && deviceInfos.length > 0 && deviceNumber < deviceInfos.length) {
+        if (deviceInfos.length > 0 && deviceNumber < deviceInfos.length) {
+            // Prevent multiple device subscriptions
+            if (lastOutputPort != null) {
+                try {
+                    lastOutputPort.close();
+                } catch (IOException e) {
+                    Log.e("MIDIPlugin", "Could not close previously connected device");
+                }
+            }
+            
             this.midiManager.openDevice(deviceInfos[deviceNumber],
                     (MidiDevice device) -> {
                         if (device != null) {
                             Log.i("MIDIPlugin", "Device opened: " + device);
 
+
                             MidiOutputPort midiOutputPort = device.openOutputPort(0);
+                            lastOutputPort = midiOutputPort;
                             midiOutputPort.connect(new MidiMessageReceiver(consumer));
                         }
                     }, new Handler(Looper.getMainLooper()));
         } else {
-            Log.i("MIDIPlugin", "Could not open device");
+            Log.e("MIDIPlugin", "Could not open device");
         }
     }
 }
