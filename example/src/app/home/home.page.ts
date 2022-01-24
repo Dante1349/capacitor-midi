@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
-import {MidiMessage, DeviceOptions, MIDIPlugin} from 'capacitor-midi';
+import {MidiMessage, DeviceOptions, MIDI} from 'capacitor-midi';
 
 @Component({
   selector: 'app-home',
@@ -12,19 +12,19 @@ export class HomePage {
   opened = false;
 
   constructor(private cd: ChangeDetectorRef) {
-    MIDIPlugin.listMIDIDevices()
+    MIDI.listMIDIDevices()
       .then(devices => {
         this.devices = devices.value;
       });
 
-    MIDIPlugin.addListener('MIDIEventReceived', (message: MidiMessage) => {
+    MIDI.addListener('MIDIEventReceived', (message: MidiMessage) => {
       this.messages.push(message);
       cd.detectChanges();
     });
   }
 
   updateDevices(): void {
-    MIDIPlugin.listMIDIDevices()
+    MIDI.listMIDIDevices()
       .then(devices => {
         this.devices = devices.value;
       });
@@ -34,7 +34,7 @@ export class HomePage {
     const deviceOptions: DeviceOptions = {
       deviceNumber: deviceNumber
     };
-    MIDIPlugin.openDevice(deviceOptions).then(r => {
+    MIDI.openDevice(deviceOptions).then(r => {
       this.clearMessages();
     });
   }

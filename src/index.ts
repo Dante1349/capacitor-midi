@@ -1,10 +1,10 @@
 import { registerPlugin } from '@capacitor/core';
 
-import type { MIDIPluginPlugin } from './definitions';
+import type { MIDIPlugin } from './definitions';
 
-const MIDIPlugin = registerPlugin<MIDIPluginPlugin>('MIDIPlugin', {
+const MIDI = registerPlugin<MIDIPlugin>('MIDIPlugin', {
   web: () => import('./web').then(m => new m.MIDIPluginWeb()),
 });
 
 export * from './definitions';
-export { MIDIPlugin };
+export { MIDI };

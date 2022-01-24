@@ -18,10 +18,10 @@ const options: DeviceOptions = {
     deviceNumber: 0 // Choose device from listMIDIDevices()
 }
 
-await MIDIPlugin.openDevice(options)
+await MIDI.openDevice(options)
 
 
-MIDIPlugin.addListener('MIDIEventReceived', 
+MIDI.addListener('MIDIEventReceived', 
     (message: MidiMessage) => console.log(message));
 
 interface MidiMessage {
