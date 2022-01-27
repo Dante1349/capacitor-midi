@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi;
 
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
+import com.getcapacitor.MessageHandler;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
@@ -62,7 +63,22 @@ public class MIDIPlugin extends Plugin {
             midiMessage.put("note", String.valueOf(message.msg[2]));
             midiMessage.put("velocity", String.valueOf(message.msg[3]));
 
-            notifyListeners("MIDIEventReceived", midiMessage);
+            notifyListeners("MIDI_MSG_EVENT", midiMessage);
+        });
+        call.resolve();
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @PluginMethod
+    public void initConnectionListener(PluginCall call) {
+        androidMidiHandler.addDeviceConnectionListener((String[] devices) -> {
+            JSObject conMsg = new JSObject();
+            JSArray values = new JSArray();
+            Arrays.stream(devices).forEach(values::put);
+            conMsg.put("value", values);
+
+            notifyListeners("MIDI_CON_EVENT", conMsg);
         });
         call.resolve();
     }

@@ -6,6 +6,7 @@ import android.media.midi.MidiDevice;
 import android.media.midi.MidiDeviceInfo;
 import android.media.midi.MidiManager;
 import android.media.midi.MidiOutputPort;
+import android.media.midi.MidiManager.DeviceCallback;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -114,5 +115,17 @@ public class AndroidMIDIHandler {
         } else {
             Log.e("MIDIPlugin", "Could not open device");
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void addDeviceConnectionListener(Consumer<String[]> consumer ) {
+        this.midiManager.registerDeviceCallback(new DeviceCallback() {
+            public void onDeviceAdded( MidiDeviceInfo info ) {
+                consumer.accept(listMIDIDevices());
+            }
+            public void onDeviceRemoved( MidiDeviceInfo info ) {
+                consumer.accept(listMIDIDevices());
+            }
+        }, null);
     }
 }
