@@ -1,20 +1,21 @@
-import type {PluginListenerHandle} from '@capacitor/core';
-import {WebPlugin} from '@capacitor/core';
+import { WebPlugin} from '@capacitor/core';
 
 import {WebMIDIHandler} from "./WebMIDIHandler";
-import type {DeviceOptions, MidiMessage, MIDIPlugin} from './definitions';
+import type {DeviceOptions, MIDIPlugin} from './definitions';
 
 export class MIDIPluginWeb extends WebPlugin implements MIDIPlugin {
-    async listMIDIDevices(): Promise<{ value: string[] }> {
+    private wmh: WebMIDIHandler = WebMIDIHandler.instance
+
+    async listMIDIDevices(): Promise<string[]> {
         const wmh = WebMIDIHandler.instance;
         await wmh.initWebMidi()
 
-        return {value: wmh.listInputsAndOutputs()};
+        return wmh.getInputsAndOutputs();
     }
 
     async openDevice(options: DeviceOptions): Promise<void> {
         const wmh = WebMIDIHandler.instance;
-        await wmh.initWebMidi();
+        await wmh.initWebMidi()
         const callback = (ret: any) => {
             let msgType
             switch (ret.type) {
@@ -35,15 +36,20 @@ export class MIDIPluginWeb extends WebPlugin implements MIDIPlugin {
                 velocity: ret.data[2],
             }
 
-            this.notifyListeners('MIDIEventReceived', msg)
+            this.notifyListeners('MIDI_MSG_EVENT', msg)
         }
-        wmh.addDeviceListener(options.deviceNumber, callback)
+        this.wmh.addDeviceListener(options.deviceNumber, callback)
         console.log("MIDIPlugin", "Device opened: " + options.deviceNumber)
-        return
     }
 
-    addDeviceListener(callback: (message: MidiMessage) => any): PluginListenerHandle {
-        return this.addListener('MIDIEventReceived', callback);
+    async initConnectionListener(): Promise<void> {
+        const wmh = WebMIDIHandler.instance;
+        await wmh.initWebMidi()
+        const callback = (devices: { value: string[] }) => {
+            this.notifyListeners('MIDI_CON_EVENT', devices)
+        }
+        this.wmh.addConnectionListener(callback)
     }
-
 }
+
+
