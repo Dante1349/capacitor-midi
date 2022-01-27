@@ -13,23 +13,25 @@ npx cap sync
 
 ## 🎼 Usage
 
-### Subscribe to MIDI events after a device is opened
-
+#### Open device and subscribe to MidiMessages
 ```typescript
 const options: DeviceOptions = {
     deviceNumber: 0 // Choose device from listMIDIDevices()
 }
 
-await MIDI.openDevice(options)
-    .catch((e) => console.error(e))
+this.devices = await MIDI.listMIDIDevices();
 
-MIDI.addDeviceListener((message: MidiMessage) => console.log(message));
+MIDI.addListener('MIDI_MSG_EVENT', (message: MidiMessage) => {
+    console.log(message);
+});
+```
+#### Subscribe to device connection changes
+```typescript
+await MIDI.initConnectionListener();
 
-interface MidiMessage {
-    type: string; // NoteOn, NoteOff, UNKNOWN - XXX
-    note: number;
-    velocity: number;
-}
+MIDI.addListener('MIDI_CON_EVENT', (devices: { value: string[] }) => {
+    console.log(devices.value);
+});
 ```
 
 ## 🎛 API
