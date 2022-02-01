@@ -1,22 +1,23 @@
 import type {PluginListenerHandle} from "@capacitor/core";
 
 export interface MIDIPlugin {
-  listMIDIDevices(): Promise<string[]>
+    listMIDIDevices(): Promise<{ value: string[] }>
 
-  openDevice(options: DeviceOptions): Promise<void>
+    openDevice(options: DeviceOptions): Promise<void>
 
-  initConnectionListener(): Promise<void>
+    initConnectionListener(): Promise<void>
 
-  addListener(eventName: 'MIDI_MSG_EVENT', listenerFunc: (message: MidiMessage) => void): Promise<PluginListenerHandle> & PluginListenerHandle;
-  addListener(eventName: 'MIDI_CON_EVENT', listenerFunc: (devices: {value: string[]}) => void): Promise<PluginListenerHandle> & PluginListenerHandle;
+    addListener(eventName: 'MIDI_MSG_EVENT', listenerFunc: (message: MidiMessage) => void): Promise<PluginListenerHandle> & PluginListenerHandle;
+
+    addListener(eventName: 'MIDI_CON_EVENT', listenerFunc: (devices: { value: string[] }) => void): Promise<PluginListenerHandle> & PluginListenerHandle;
 }
 
 export interface MidiMessage {
-  type: string;
-  note: number;
-  velocity: number;
+    type: string;
+    note: number;
+    velocity: number;
 }
 
 export interface DeviceOptions {
-  deviceNumber: number
+    deviceNumber: number
 }

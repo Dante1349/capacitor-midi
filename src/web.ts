@@ -1,4 +1,4 @@
-import { WebPlugin} from '@capacitor/core';
+import {WebPlugin} from '@capacitor/core';
 
 import {WebMIDIHandler} from "./WebMIDIHandler";
 import type {DeviceOptions, MIDIPlugin} from './definitions';
@@ -6,7 +6,7 @@ import type {DeviceOptions, MIDIPlugin} from './definitions';
 export class MIDIPluginWeb extends WebPlugin implements MIDIPlugin {
     private wmh: WebMIDIHandler = WebMIDIHandler.instance
 
-    async listMIDIDevices(): Promise<string[]> {
+    async listMIDIDevices(): Promise<{ value: string[] }> {
         const wmh = WebMIDIHandler.instance;
         await wmh.initWebMidi()
 

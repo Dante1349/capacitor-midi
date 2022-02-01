@@ -47,10 +47,10 @@ export class WebMIDIHandler {
         }
     }
 
-    public getInputsAndOutputs(): string[] {
+    public getInputsAndOutputs(): { value: string[] } {
         if (!this.midi) {
             console.error("WebMidi not initialized!")
-            return []
+            return {value: []}
         }
 
         const devices = []
@@ -59,7 +59,7 @@ export class WebMIDIHandler {
                 devices.push((entry.name) ? entry.name : "Unknown Device")
             }
         }
-        return devices
+        return {value: devices}
     }
 
     public addConnectionListener(callback: (devices: { value: string[] }) => any): void {
@@ -70,10 +70,10 @@ export class WebMIDIHandler {
         this.midi.removeListener("connected")
         this.midi.removeListener("disconnected")
         this.midi.addListener("connected", () => {
-            callback({value: this.getInputsAndOutputs()})
+            callback(this.getInputsAndOutputs())
         })
         this.midi.addListener("disconnected", () => {
-            callback({value: this.getInputsAndOutputs()})
+            callback(this.getInputsAndOutputs())
         })
     }
 }
