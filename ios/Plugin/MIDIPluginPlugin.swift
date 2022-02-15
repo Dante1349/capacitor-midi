@@ -7,7 +7,7 @@ import Capacitor
  */
 @objc(MIDIPluginPlugin)
 public class MIDIPluginPlugin: CAPPlugin {
-    private let implementation = MIDIPlugin()
+    private let implementation = IOSMIDIHandler()
 
     @objc func echo(_ call: CAPPluginCall) {
         let value = call.getString("value") ?? ""
@@ -15,4 +15,21 @@ public class MIDIPluginPlugin: CAPPlugin {
             "value": implementation.echo(value)
         ])
     }
+    
+    @objc func listMIDIDevices(_ call: CAPPluginCall) {
+        call.resolve([
+            "value": implementation.listDevices()
+        ])
+    }
+    
+    @objc func openDevice(_ call: CAPPluginCall) {
+        print("open not implemented")
+        call.resolve()
+    }
+    
+    @objc func initConnectionListener(_ call: CAPPluginCall) {
+        print("init connection listener not implemented")
+        call.resolve()
+    }
+    
 }

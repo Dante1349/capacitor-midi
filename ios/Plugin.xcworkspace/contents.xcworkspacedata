@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:Plugin.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Plugin">
+   </FileRef>
+   <FileRef
+      location = "group:Plugin.xcworkspace">
+   </FileRef>
+   <FileRef
+      location = "group:PluginTests">
+   </FileRef>
+   <FileRef
+      location = "group:Podfile">
+   </FileRef>
+</Workspace>

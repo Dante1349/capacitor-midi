@@ -12,4 +12,4 @@ include ':capacitor-keyboard'
 project(':capacitor-keyboard').projectDir = new File('../node_modules/@capacitor/keyboard/android')
 
 include ':capacitor-midi'
-project(':capacitor-midi').projectDir = new File('../node_modules/capacitor-midi/android')
+project(':capacitor-midi').projectDir = new File('../../android')

@@ -15,7 +15,7 @@ export class HomePage implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.devices = (await MIDI.listMIDIDevices());
+    this.devices = (await MIDI.listMIDIDevices()).value;
 
     MIDI.addListener('MIDI_MSG_EVENT', (message: MidiMessage) => {
       this.messages.push(message);
@@ -33,7 +33,7 @@ export class HomePage implements OnInit {
   updateDevices(): void {
     MIDI.listMIDIDevices()
       .then(devices => {
-        this.devices = devices;
+        this.devices = devices.value;
         this.cd.detectChanges();
       });
   }
