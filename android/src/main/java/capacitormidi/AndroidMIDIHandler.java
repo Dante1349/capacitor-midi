@@ -37,26 +37,30 @@ public class AndroidMIDIHandler {
             this.midiManager = (MidiManager) context.getSystemService(Context.MIDI_SERVICE);
         } else {
             Log.e("MIDIPlugin", "No MIDI feature found");
-            throw new Error("No MIDI feature found.");
         }
     }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     AndroidMIDIHandler AndroidMIDIHandler(Context context) {
-        if(INSTANCE == null) {
+        if (INSTANCE == null) {
             INSTANCE = new AndroidMIDIHandler(context);
         }
 
         return INSTANCE;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private MidiDeviceInfo[] getDeviceInfos() {
-        return this.midiManager.getDevices();
+    private void logNoMIDIFeatureFound() {
+        Log.e("MIDIPlugin", "No MIDI feature found");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public String[] listMIDIDevices() {
-        MidiDeviceInfo[] infos = this.getDeviceInfos();
+        if (this.midiManager == null) {
+            this.logNoMIDIFeatureFound();
+            return new String[]{};
+        }
+
+        MidiDeviceInfo[] infos = this.midiManager.getDevices();
         List<String> devices = new ArrayList<>();
 
         if (infos != null) {
@@ -90,7 +94,12 @@ public class AndroidMIDIHandler {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void openDevice(int deviceNumber, Consumer<MIDIDeviceMessage> consumer) {
-        MidiDeviceInfo deviceInfos[] = this.getDeviceInfos();
+        if (this.midiManager == null) {
+            this.logNoMIDIFeatureFound();
+            return;
+        }
+
+        MidiDeviceInfo deviceInfos[] = this.midiManager.getDevices();
         if (deviceInfos.length > 0 && deviceNumber < deviceInfos.length) {
             // Prevent multiple device subscriptions
             if (lastOutputPort != null) {
@@ -100,7 +109,7 @@ public class AndroidMIDIHandler {
                     Log.e("MIDIPlugin", "Could not close previously connected device");
                 }
             }
-            
+
             this.midiManager.openDevice(deviceInfos[deviceNumber],
                     (MidiDevice device) -> {
                         if (device != null) {
@@ -118,12 +127,18 @@ public class AndroidMIDIHandler {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void addDeviceConnectionListener(Consumer<String[]> consumer ) {
+    public void addDeviceConnectionListener(Consumer<String[]> consumer) {
+        if (this.midiManager == null) {
+            this.logNoMIDIFeatureFound();
+            return;
+        }
+
         this.midiManager.registerDeviceCallback(new DeviceCallback() {
-            public void onDeviceAdded( MidiDeviceInfo info ) {
+            public void onDeviceAdded(MidiDeviceInfo info) {
                 consumer.accept(listMIDIDevices());
             }
-            public void onDeviceRemoved( MidiDeviceInfo info ) {
+
+            public void onDeviceRemoved(MidiDeviceInfo info) {
                 consumer.accept(listMIDIDevices());
             }
         }, null);
