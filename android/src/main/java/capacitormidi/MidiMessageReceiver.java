@@ -19,7 +19,15 @@ public class MidiMessageReceiver extends MidiReceiver {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onSend(byte[] msg, int offset, int count, long timestamp) throws IOException {
-        Log.i("MidiMessageReceiver", "msg: " + msg + ", offset: " + offset + ", count: " + count + ", timestamp: " + timestamp);
+        String message = "["
+                +String.valueOf(msg[0])+","
+                +String.valueOf(msg[1])+","
+                +String.valueOf(msg[2])+","
+                +String.valueOf(msg[3])+","
+                +String.valueOf(msg[4])+","
+                +String.valueOf(msg[5])+","
+                +"]";
+        Log.i("MidiMessageReceiver", "msg: " + message + ", offset: " + offset + ", count: " + count + ", timestamp: " + timestamp);
         consumer.accept(new MIDIDeviceMessage(msg, offset, count, timestamp));
     }
 }

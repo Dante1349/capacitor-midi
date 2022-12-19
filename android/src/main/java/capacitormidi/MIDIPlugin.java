@@ -6,7 +6,6 @@ import androidx.annotation.RequiresApi;
 
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
-import com.getcapacitor.MessageHandler;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
@@ -47,21 +46,21 @@ public class MIDIPlugin extends Plugin {
             JSObject midiMessage = new JSObject();
 
             String rawType = String.valueOf(message.msg[1]);
+            int note = message.msg[2];
+            int velocity = message.msg[3];
+
             String type = "";
-            switch(rawType) {
-                case "-112":
-                    type = "NoteOn";
-                    break;
-                case "-128":
-                    type = "NoteOff";
-                    break;
-                default:
-                    type = "UNKNOWN - " + rawType;
-                    break;
+            if ( rawType.equals("-112") && velocity != 0 ) {
+                type = "NoteOn";
+            } else if ( (rawType.equals("-128") || rawType.equals("-112")) && velocity == 0 ) {
+                type = "NoteOff";
+            } else {
+                type = "UNKNOWN - " + rawType;
             }
+
             midiMessage.put("type", type);
-            midiMessage.put("note", String.valueOf(message.msg[2]));
-            midiMessage.put("velocity", String.valueOf(message.msg[3]));
+            midiMessage.put("note", note);
+            midiMessage.put("velocity", velocity);
 
             notifyListeners("MIDI_MSG_EVENT", midiMessage);
         });
