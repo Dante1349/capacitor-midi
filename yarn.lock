@@ -50,15 +50,15 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
-"@capacitor/android@^4.0.0":
-  version "4.7.1"
-  resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-4.7.1.tgz#2bee65853aa8117d2247ab0bd583ba52e08a63ba"
-  integrity sha512-WRyP50HDfZVW/xiCHh8MMFSO30AqiLVLrCmBwNsMYSldzBbhSaU06YJXU41jJjXR2yu6E3/H6r8hNU2gec4RKA==
+"@capacitor/android@^5.0.0":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-5.0.2.tgz#07239b762e9365b9332257cdcfd5b2f46cdff8ac"
+  integrity sha512-IYqr+qO4LvvqjJGkH+tIFm1iclGu8m1QTCFz4+8qxJ2QwUiz3P/iS5HYw+GCx+rqJIDcywtAm4kp9Lh4jS3amA==
 
-"@capacitor/core@^4.0.0":
-  version "4.7.1"
-  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-4.7.1.tgz#8c9d8a098c55dbebe0374760caa1736fdce1cfdc"
-  integrity sha512-NZcsyPNt1avNELnKuD5OsL/O/ejQxlw9UkLUEuiptPPAEwS8WJ1gGabaEBbCb2wNA/nPfrGH+ZC2LGhlpMlLeg==
+"@capacitor/core@^5.0.0":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-5.0.2.tgz#5dbeab1cd527ffb14399ed091ba35306863a7d2b"
+  integrity sha512-gqRHQQcxIvIYI102HCu2EievnkJ7IksBIFNK17f7PdPi/HmOxZLeJkJBMxnEE31S8MJqGCT63a6JwQ2jr/J9AA==
   dependencies:
     tslib "^2.1.0"
 
@@ -72,10 +72,10 @@
     minimist "^1.2.5"
     typescript "^4.0.3"
 
-"@capacitor/ios@^4.0.0":
-  version "4.7.1"
-  resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-4.7.1.tgz#0a001941cdb42bbfdb877d5b3b94e94a66e20eb6"
-  integrity sha512-8VPxVoqj8E8e4lwPphAZ6ZdOtfQNC+DfUNafjyF+Y/hWu7xMBaElDnCqfSIVKtLUoJud8Ke7yONgMTHnNE+C9A==
+"@capacitor/ios@^5.0.0":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-5.0.2.tgz#8abe144ff4887dc76d13368c085cd59b51d1e78e"
+  integrity sha512-ORBKMBYkauyALuiPNxdXlFD6LeJLHUIfi9mfpdrj5kzPBkQOv/Ndkc+i/NFCPEJO4jwWbS+7rraycWbmB9M9Fw==
 
 "@eslint-community/eslint-utils@^4.2.0":
   version "4.4.0"
