@@ -1,6 +1,6 @@
 {
   "name": "capacitor-midi",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Grants access to midi devices via native libraries or WebMIDI.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
