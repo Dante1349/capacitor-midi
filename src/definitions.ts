@@ -7,9 +7,9 @@ export interface MIDIPlugin {
 
     initConnectionListener(): Promise<void>
 
-    addListener(eventName: 'MIDI_MSG_EVENT', listenerFunc: (message: MidiMessage) => void): Promise<PluginListenerHandle> & PluginListenerHandle;
+    addListener(eventName: 'MIDI_MSG_EVENT', listenerFunc: (message: MidiMessage) => void): Promise<PluginListenerHandle>;
 
-    addListener(eventName: 'MIDI_CON_EVENT', listenerFunc: (devices: { value: string[] }) => void): Promise<PluginListenerHandle> & PluginListenerHandle;
+    addListener(eventName: 'MIDI_CON_EVENT', listenerFunc: (devices: { value: string[] }) => void): Promise<PluginListenerHandle>;
 }
 
 export interface MidiMessage {
