@@ -53,10 +53,10 @@ MIDI.addListener('MIDI_CON_EVENT', (devices: { value: string[] }) => {
 ### listMIDIDevices()
 
 ```typescript
-listMIDIDevices() => any
+listMIDIDevices() => Promise<{ value: string[]; }>
 ```
 
-**Returns:** <code>any</code>
+**Returns:** <code>Promise&lt;{ value: {}; }&gt;</code>
 
 --------------------
 
@@ -64,14 +64,12 @@ listMIDIDevices() => any
 ### openDevice(...)
 
 ```typescript
-openDevice(options: DeviceOptions) => any
+openDevice(options: DeviceOptions) => Promise<void>
 ```
 
 | Param         | Type                                                    |
 | ------------- | ------------------------------------------------------- |
 | **`options`** | <code><a href="#deviceoptions">DeviceOptions</a></code> |
-
-**Returns:** <code>any</code>
 
 --------------------
 
@@ -79,10 +77,8 @@ openDevice(options: DeviceOptions) => any
 ### initConnectionListener()
 
 ```typescript
-initConnectionListener() => any
+initConnectionListener() => Promise<void>
 ```
-
-**Returns:** <code>any</code>
 
 --------------------
 
@@ -90,7 +86,7 @@ initConnectionListener() => any
 ### addListener(...)
 
 ```typescript
-addListener(eventName: 'MIDI_MSG_EVENT', listenerFunc: (message: MidiMessage) => void) => Promise<PluginListenerHandle> & PluginListenerHandle
+addListener(eventName: 'MIDI_MSG_EVENT', listenerFunc: (message: MidiMessage) => void) => Promise<PluginListenerHandle>
 ```
 
 | Param              | Type                                                                      |
@@ -98,7 +94,7 @@ addListener(eventName: 'MIDI_MSG_EVENT', listenerFunc: (message: MidiMessage) =>
 | **`eventName`**    | <code>"MIDI_MSG_EVENT"</code>                                             |
 | **`listenerFunc`** | <code>(message: <a href="#midimessage">MidiMessage</a>) =&gt; void</code> |
 
-**Returns:** <code>any</code>
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 --------------------
 
@@ -106,7 +102,7 @@ addListener(eventName: 'MIDI_MSG_EVENT', listenerFunc: (message: MidiMessage) =>
 ### addListener(...)
 
 ```typescript
-addListener(eventName: 'MIDI_CON_EVENT', listenerFunc: (devices: { value: string[]; }) => void) => Promise<PluginListenerHandle> & PluginListenerHandle
+addListener(eventName: 'MIDI_CON_EVENT', listenerFunc: (devices: { value: string[]; }) => void) => Promise<PluginListenerHandle>
 ```
 
 | Param              | Type                                              |
@@ -114,7 +110,7 @@ addListener(eventName: 'MIDI_CON_EVENT', listenerFunc: (devices: { value: string
 | **`eventName`**    | <code>"MIDI_CON_EVENT"</code>                     |
 | **`listenerFunc`** | <code>(devices: { value: {}; }) =&gt; void</code> |
 
-**Returns:** <code>any</code>
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 --------------------
 
@@ -129,6 +125,13 @@ addListener(eventName: 'MIDI_CON_EVENT', listenerFunc: (devices: { value: string
 | **`deviceNumber`** | <code>number</code> |
 
 
+#### PluginListenerHandle
+
+| Prop         | Type                                      |
+| ------------ | ----------------------------------------- |
+| **`remove`** | <code>() =&gt; Promise&lt;void&gt;</code> |
+
+
 #### MidiMessage
 
 | Prop           | Type                |
@@ -136,12 +139,5 @@ addListener(eventName: 'MIDI_CON_EVENT', listenerFunc: (devices: { value: string
 | **`type`**     | <code>string</code> |
 | **`note`**     | <code>number</code> |
 | **`velocity`** | <code>number</code> |
-
-
-#### PluginListenerHandle
-
-| Prop         | Type                      |
-| ------------ | ------------------------- |
-| **`remove`** | <code>() =&gt; any</code> |
 
 </docgen-api>
