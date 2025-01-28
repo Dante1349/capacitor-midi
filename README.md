@@ -1,3 +1,5 @@
+# ❗❗❗ This repository is no longer maintained. It is archived and read-only. Current development is done in @midiative/capacitor-midi-device (https://github.com/midiative/capacitor-midi-device) ❗❗❗
+
 # 🎹 capacitor-midi
 
 Grants access to midi devices via native libraries or WebMIDI.
